@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="title">To Do Liste App</h1>
+
+
+    <input type="text" class="input" placeholder="+ Add task" id="input">
+    <button class="btn" id="btn">ajouter</button>
+
+
+    <ul class="liste_d_affichage" id ="liste_d_affichage">
+    </ul>
+
+
+    <button id="show-completed-btn">tache_terminer</button>
+
+
+
+
+    <div id="completed-section" style="display: none; margin-top: 20px;"">
+        <span id="close-completed" class="close-btn">&times;</span>
+        <h3>Tâches Terminées</h3>
+        <ul id="completed-list"></ul>
+    </div>
+    
+
+
+    <script src="./to_do_liste.js"></script>
+</body>
+</html>
