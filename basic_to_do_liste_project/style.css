@@ -1,0 +1,192 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body styling */
+body {
+    background: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Title */
+.title {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Input and button section */
+.input, .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input {
+    width: 250px;
+    margin-right: 10px;
+}
+
+.btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Task list */
+.liste_d_affichage, #completed-list {
+    list-style-type: none;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 30px;
+    padding: 0;
+}
+
+.liste_d_affichage li,
+#completed-list li {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.liste_d_affichage li:hover {
+    transform: scale(1.02);
+}
+
+/* Task text */
+label {
+    flex-grow: 1;
+    margin: 0 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Buttons inside task */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+button img {
+    transition: transform 0.2s;
+}
+
+button img:hover {
+    transform: scale(1.2);
+}
+
+/* Completed section */
+#completed-section {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+#completed-section h3 {
+    color: #2ecc71;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Toggle button */
+#show-completed-btn {
+    margin-top: 20px;
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#show-completed-btn:hover {
+    background-color: #27ae60;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .liste_d_affichage li,
+    #completed-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    label {
+        margin: 10px 0;
+    }
+}
+
+
+
+
+#completed-section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+}
+
+#completed-section h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+#completed-section ul {
+    padding-left: 20px;
+}
