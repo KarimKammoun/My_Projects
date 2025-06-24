@@ -1,6 +1,9 @@
 "use client";
 
 import Header from "@/components/Header";
+
+
+
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Trash2, Square, CheckSquare, Undo2 } from "lucide-react";
+import axios from "axios";
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,6 +34,49 @@ export default function Home() {
   const [selectedColor, setSelectedColor] = useState("");
   const [openAdd, setOpenAdd] = useState(false);
   const [openDone, setOpenDone] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  
+  useEffect(() => {
+      // User is authenticated, fetch their tasks
+      const fetchTasks = async () => {
+        try {
+
+            const response = await axios.get("/api/tasks");
+
+            const data = response.data;
+
+            data?.map((_data: any, index: number) => {
+              console.log(`Data ${index}:`, _data);
+            });
+          setActiveTodos(data.activeTodos || []);
+          setDoneTodos(data.doneTodos || []);
+        } catch (error) {
+          console.error("Error fetching tasks:", error);
+        }
+    if (isAuthenticated) {
+      
+      fetchTasks();
+    }else {
+      // User is not authenticated, clear tasks
+      setActiveTodos([]);
+      setDoneTodos([]);
+
+      // redirect to login page
+      window.location.href = "/login";
+    }
+    }
+  }, []);
+
+const [count , setCount] = useState(0);
+
+  useEffect(() => {
+    setCount((prev) => prev + 1);
+    console.log("Count:", count); 
+  }, [openEdit]);
+
+
+
 
   useEffect(() => {
     if (openAdd) {
@@ -72,6 +119,24 @@ export default function Home() {
     };
     return colorMap[color] || "bg-gray-400";
   };
+
+
+  const handleEdit = (index: number) => {
+    const text = inputRef.current?.value?.trim();
+    if (!text) return alert("Veuillez entrer une tâche.");
+    if (!selectedColor) return alert("Veuillez choisir une couleur.");
+    const todo = activeTodos[index];
+    setActiveTodos((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...todo, text, color: selectedColor };
+      return updated;
+    });
+    setOpenEdit(false);
+    setSelectedColor("");
+  };
+
+
+
 
   return (
     <div>
@@ -169,7 +234,7 @@ export default function Home() {
 
             <li
               key={index}
-              className=" flex items-center justify-between p-3 bg-gray-300 rounded shadow w-full max-w-xl"
+              className=" flex items-center justify-between p-3 bg-gray-300 rounded shadow w-full h-18 max-w-xl"
             >
               <div className=" flex items-center gap-3">
                 <div className={`w-1 h-10 rounded ${getColorClass(todo.color)}`} />
@@ -179,14 +244,55 @@ export default function Home() {
                 <span className="select-none">{todo.text}</span>
               </div>
 
-              <button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleDelete(index)}
-                aria-label="Supprimer tâche"
-              >
-                <Trash2 className="w-5 h-5 text-black" />
-              </button>
+
+              <div className="flex items-center gap-0.5">
+
+                <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+                  <DialogTrigger asChild>
+                    <Button className="m-6 w-10 h-7 bg-gray-500">Edit</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Edit Task</DialogTitle>
+                      <DialogDescription className="flex flex-col gap-4 mt-4">
+                        <Input placeholder="Nouvelle tâche" ref={inputRef} />
+                        
+                        <Select onValueChange={setSelectedColor} value={selectedColor}>
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Choisir la couleur" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Couleurs</SelectLabel>
+                              <SelectItem value="green">Green</SelectItem>
+                              <SelectItem value="blue">Blue</SelectItem>
+                              <SelectItem value="red">Red</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        
+                        <div className="flex justify-end gap-2">
+                          <Button variant="secondary" onClick={() => setOpenEdit(false)}>
+                            Annuler
+                          </Button>
+                          <Button onClick={() => handleEdit(index)}>Edit</Button>
+                        </div>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+
+
+                <button
+                  onClick={() => handleDelete(index)}
+                  aria-label="Supprimer tâche"
+                >
+                  <Trash2 className="w-5 h-5 text-black" />
+                </button>
+
+              </div>
+
+
             </li>
           ))}
         </ul>
