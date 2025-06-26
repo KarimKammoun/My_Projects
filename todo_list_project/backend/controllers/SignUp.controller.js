@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Info from "../models/UserInfo.model.js";
 
 export const signUp = async (req, res) => {
-  const { FirstName, LastName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   try {
     const existingUser = await Info.findOne({ email });
@@ -15,8 +15,8 @@ export const signUp = async (req, res) => {
 
     const newUser = new Info({
       UserId: Date.now().toString(), 
-      FirstName,
-      LastName,
+      firstName,
+      lastName,
       email,
       password, 
     });

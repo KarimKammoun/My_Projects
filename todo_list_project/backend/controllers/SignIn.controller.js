@@ -1,33 +1,20 @@
-import mongoose from "mongoose";
-import Info from "../models/UserInfo.model.js"; 
+import Info from "../models/UserInfo.model.js";
 
-export const signIn = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await Info.findOne({ email });
+    const user = await Info.findOne({ email: email, password: password });
+    console.log("User found:", user);
 
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Email incorrect ou utilisateur inexistant.",
-      });
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    if (user.password !== password) {
-      return res.status(401).json({
-        success: false,
-        message: "Mot de passe incorrect.",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Connexion réussie",
-      user, 
-    });
-  } catch (error) {
-    console.error("Erreur pendant la connexion :", error.message);
-    res.status(500).json({ success: false, message: "Erreur serveur" });
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+ 

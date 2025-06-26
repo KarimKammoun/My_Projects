@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/sign-up-form"
+import {SignUpForm} from "@/components/sign-up-form"
 import Header from "@/components/Header";
 
 export default function Page() {
@@ -8,7 +8,7 @@ export default function Page() {
       
       <div className=" flex-1 bg-gray-900 flex w-full items-center justify-center p-6 md:p-10">
         <div className=" w-full max-w-sm">
-          <LoginForm />
+          <SignUpForm />
         </div>
       </div>
     </div>
