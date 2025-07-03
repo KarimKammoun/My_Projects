@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@radix-ui/react-alert-dialog": "^1.1.14",
+>>>>>>> master
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.5",
@@ -20,6 +24,10 @@
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+<<<<<<< HEAD
+=======
+    "react-router-dom": "^7.6.3",
+>>>>>>> master
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

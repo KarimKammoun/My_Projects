@@ -1,9 +1,13 @@
 
 @import "tailwindcss";
 @import "tw-animate-css";
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+=======
+
+>>>>>>> master
 
 
 :root {

@@ -134,4 +134,27 @@ export const reactivateTask = async (req, res) => {
     console.error("Error in marking task as done:", error.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+
+export const deleteAcount = async (req, res) => {
+	const { userId } = req.body.data;
+
+	if (!userId) {
+		return res.status(400).json({ success: false, message: "Missing userId" });
+	}
+
+	try {
+    await task.deleteMany({ userId: userId });
+    await info.findOneAndDelete(userId);
+		res.status(200).json({ success: true, message: "user deleted" });
+	} catch (error) {
+		console.error("Error in deleting user:", error.message);
+		res.status(500).json({ success: false, message: "Server Error" });
+	}
+};
+>>>>>>> master

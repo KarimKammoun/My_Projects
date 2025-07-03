@@ -79,6 +79,7 @@ export function LoginForm() {
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
+<<<<<<< HEAD
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
@@ -88,6 +89,12 @@ export function LoginForm() {
                 </div>
                 <Input
                   id="password"
+=======
+                </div>
+                <Input
+                  id="password"
+                  placeholder="***********"
+>>>>>>> master
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -98,9 +105,13 @@ export function LoginForm() {
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
+<<<<<<< HEAD
                 <Button variant="outline" className="w-full" disabled>
                   Login with Google
                 </Button>
+=======
+
+>>>>>>> master
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
