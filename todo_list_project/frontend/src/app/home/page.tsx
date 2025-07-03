@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { useRouter } from "next/navigation";
 
 
 import { useRef, useState, useEffect } from "react";
@@ -44,8 +45,19 @@ export default function Home() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   var taskindex=0;
+
+  const router = useRouter();
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      router.replace("/sign-in"); 
+    }
+  }, [router]);
+
   
   useEffect(() => {
+
+
     const fetchTasks = async () => {
       try {
             const userId = localStorage.getItem("userId");
@@ -147,7 +159,7 @@ export default function Home() {
 
     try {
 
-      await axios.delete(`${API_BASE_URL}/api/tasks`, {
+      await axios.delete(`${API_BASE_URL}/api/tasks/deleteTask`, {
         data: {
           taskId: todoToDelete.taskId,
         },
@@ -249,8 +261,11 @@ export default function Home() {
 
 
   return (
-    <div>
+
+
+    <>
       <Header />
+
 
       <main className="bg-gray-900 min-h-screen p-8 flex flex-col gap-4">
         <h1 className=" text-white text-5xl font-bold mb-6 flex justify-center">📝 To Do List</h1>
@@ -260,18 +275,18 @@ export default function Home() {
           <Dialog open={openDone} onOpenChange={setOpenDone}>
             <DialogTrigger asChild>
               <Button className="m-6 w-40 h-10 bg-gray-500">
-                Tâches terminées ({doneTodos.length})
+                Finished tasks ({doneTodos.length})
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Tâches terminées</DialogTitle>
+                <DialogTitle>Finished tasks</DialogTitle>
                 <DialogDescription>
                   
                 </DialogDescription>
 
                 {doneTodos.length === 0 ? (
-                  "Aucune tâche terminée"
+                  "No tasks completed"
                 ) : (
                   <ul className="mt-4 space-y-2 max-h-60 overflow-auto pr-2">
                     {doneTodos.map((todo, i) => (
@@ -302,20 +317,20 @@ export default function Home() {
 
           <Dialog open={openAdd} onOpenChange={setOpenAdd}>
             <DialogTrigger asChild>
-              <Button className="m-6 w-40 h-10 bg-gray-500">Ajouter une tâche</Button>
+              <Button className="m-6 w-40 h-10 bg-gray-500">Add a task</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Ajouter une tâche</DialogTitle>
+                <DialogTitle>Add a task</DialogTitle>
                 <DialogDescription className="flex flex-col gap-4 mt-4">
-                  <Input placeholder="Nouvelle tâche" ref={inputRef} />
+                  <Input placeholder="New task" ref={inputRef} />
                   <Select onValueChange={setSelectedColor} value={selectedColor}>
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Choisir la couleur" />
+                      <SelectValue placeholder="Choose the color" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Couleurs</SelectLabel>
+                        <SelectLabel>Colors</SelectLabel>
                         <SelectItem value="green">Green</SelectItem>
                         <SelectItem value="blue">Blue</SelectItem>
                         <SelectItem value="red">Red</SelectItem>
@@ -326,9 +341,9 @@ export default function Home() {
               </DialogHeader>
               <DialogFooter className="flex justify-end gap-2">
                 <Button variant="secondary" onClick={() => setOpenAdd(false)}>
-                  Annuler
+                  Cancel
                 </Button>
-                <Button onClick={handleAdd}>Ajouter</Button>
+                <Button onClick={handleAdd}>Add</Button>
               </DialogFooter>
 
             </DialogContent>
@@ -382,7 +397,7 @@ export default function Home() {
                   
                       </DialogDescription>
                       <div className="flex flex-col gap-4 mt-4">
-                        <Input placeholder="Nouvelle tâche" onChange={(e) => setEditedText(e.target.value)}/>
+                        <Input placeholder="New task" onChange={(e) => setEditedText(e.target.value)}/>
                         
                         <Select onValueChange={setSelectedColor} value={selectedColor}>
                           <SelectTrigger className="w-[180px]">
@@ -390,7 +405,7 @@ export default function Home() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              <SelectLabel>Couleurs</SelectLabel>
+                              <SelectLabel>Colors</SelectLabel>
                               <SelectItem value="green">Green</SelectItem>
                               <SelectItem value="blue">Blue</SelectItem>
                               <SelectItem value="red">Red</SelectItem>
@@ -400,7 +415,7 @@ export default function Home() {
                         
                         <div className="flex justify-end gap-2">
                           <Button variant="secondary" onClick={() => setOpenEdit(false)}>
-                            Annuler
+                            Cancel
                           </Button>
                           <Button onClick={() => handleEdit()}>Edit</Button>
                         </div>
@@ -427,7 +442,7 @@ export default function Home() {
 
       </main>
 
-    </div>
+    </>
 
   );
 }

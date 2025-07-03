@@ -109,11 +109,8 @@ export function SignUpForm() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full bg-gray-900">
                   Sign Up
-                </Button>
-                <Button variant="outline" className="w-full" type="button">
-                  Sign Up with Google
                 </Button>
               </div>
             </div>

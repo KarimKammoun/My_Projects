@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createTask, deleteTask, getTask, updateTask ,markTaskAsDone , reactivateTask} from "../controllers/Task.controller.js";
+import { createTask, deleteTask, getTask, updateTask ,markTaskAsDone , reactivateTask ,deleteAcount} from "../controllers/Task.controller.js";
 
 const router = express.Router();
 
@@ -9,6 +9,8 @@ router.post("/", createTask);
 router.put("/update", updateTask); 
 router.put("/reactivate", reactivateTask); 
 router.put("/mark-done", markTaskAsDone);
-router.delete("/", deleteTask);
+router.delete("/deleteTask", deleteTask);
+router.delete("/deleteAcount", deleteAcount);
+
 
 export default router;
