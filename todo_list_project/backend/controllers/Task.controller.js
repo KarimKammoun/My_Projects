@@ -147,7 +147,7 @@ export const deleteAcount = async (req, res) => {
 
 	try {
     await task.deleteMany({ userId: userId });
-    await info.findOneAndDelete(userId);
+    await info.findOneAndDelete({ UserId: userId });
 		res.status(200).json({ success: true, message: "user deleted" });
 	} catch (error) {
 		console.error("Error in deleting user:", error.message);
