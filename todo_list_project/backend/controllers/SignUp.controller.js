@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Info from "../models/UserInfo.model.js";
+import bcrypt from "bcryptjs";  
 
 export const signUp = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -18,7 +19,7 @@ export const signUp = async (req, res) => {
       FirstName: firstName,
       LastName: lastName,
       email,
-      password, 
+      password: password, 
     });
 
     await newUser.save();
