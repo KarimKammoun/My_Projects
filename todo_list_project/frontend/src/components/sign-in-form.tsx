@@ -1,6 +1,4 @@
 "use client";
-
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -36,10 +34,13 @@ export function LoginForm() {
         alert("Please enter both email and password");
         return;
       }
+
+
       const res = await axios.post(`${API_BASE_URL}/api/SignIn`, {
         email,
-        password
+        password,  
       })
+
       console.log("Login response:", res.data);
       if (res.data.success) {
         localStorage.setItem("userId", res.data.user.UserId)

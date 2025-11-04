@@ -1,6 +1,6 @@
 "use client"
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+import bcrypt from "bcryptjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
@@ -37,12 +37,14 @@ export function SignUpForm() {
         alert("Please enter both email and password");
         return;
       }
+      const saltRounds = 10;
+      const password1 = await bcrypt.hash(password, saltRounds);
+      
       const res = await axios.post(`${API_BASE_URL}/api/SignUp`, {
         firstName: firstName,
         lastName: lastName,
         email,
-        password,
-
+        password : password1,
       })
       console.log("Login response:", res.data);
       if (res.data.success) {
